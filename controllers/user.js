@@ -2,7 +2,8 @@ const User = require('../models/User');
 const encryption = require('../utilities/encription');
 
 module.exports.registerPost = (req, res) => {
-    let user = req.body;
+    let user = req.body.body.registrationData;
+    console.log(user)
 
     if (user.password && user.password !== user.confirmedPassword) {
         res.send("Password don't match.");
