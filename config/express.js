@@ -6,6 +6,7 @@ const cors = require('cors');
 
 module.exports = (app) => {
     app.use(bodyParser.urlencoded({ extended: true }));
+    app.use(bodyParser.json());
     app.use(cookieParser());
     app.use(session({ secret: 'S3cr3t', saveUninitialized: false, resave: false }));
     app.use(passport.initialize());
