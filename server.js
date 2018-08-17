@@ -1,33 +1,16 @@
-// #imports
 const express = require('express');
-const cors = require('cors')
-
-
-
-// #variable 
-const config = require('./config/config')
+const config = require('./config/config');
 const app = express();
 
-
 // #db 
-require('./config/database')(config)
-
+require('./config/database')(config);
 
 // #middleware
-app.use(cors());
-
-
-
+require('./config/express')(app);
+require('./config/routes')(app);
+require('./config/passport')();
 
 // #server
 app.listen(config.PORT, () => {
-    console.log(`Running on port ${config.PORT}`)
-})
-
-// #routes
-app.get('/', (req,res) => {
-    res.json({
-        food : 'KFC',
-        drink : 'coke'
-    })
-})
+    console.log(`Running on port ${config.PORT}`);
+});
