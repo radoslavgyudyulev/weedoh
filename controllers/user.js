@@ -1,5 +1,5 @@
 const User = require('../models/User');
-const encryption = require('../utilities/encription');
+const encryption = require('../utilities/encryption');
 
 module.exports.registerPost = (req, res) => {
     let user = req.body.body.registrationData;
@@ -28,5 +28,25 @@ module.exports.registerPost = (req, res) => {
         });
     }).catch(error => {
         return console.log(error);
+    });
+};
+
+module.exports.loginPost = (req, res) => {
+    let userToLogin = req.body.body.body;
+
+    User.findOne({ email: userToLogin.email }).then(user => {
+        if (!user || !user.authenticate(userToLogin.password)) {
+            res.send('Invalid Credentials!');
+        } else {
+            req.logIn(user, (error) => {
+                if (error) {
+                    return res.render('Authentication not working!');
+                }
+
+                res.send('success', user);
+            });
+        }
+    }).catch(err => {
+        return console.log(err);
     });
 };

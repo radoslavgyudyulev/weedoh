@@ -1,5 +1,5 @@
 const mongoose = require('mongoose');
-const encription = require('../utilities/encription');
+const encryption = require('../utilities/encryption');
 
 const UserSchema = new mongoose.Schema({
     email: { type: mongoose.SchemaTypes.String, required: true, unique: true },
@@ -16,9 +16,9 @@ const UserSchema = new mongoose.Schema({
     town: { type: mongoose.SchemaTypes.String }
 });
 
-UserSchema.method = ({
+UserSchema.method({
     authenticate: function (password) {
-        let hashedPassword = encription.generateHashedPassword(this.salt, password);
+        let hashedPassword = encryption.generateHashedPassword(this.salt, password);
 
         if (hashedPassword === this.password) {
             return true;
@@ -27,6 +27,7 @@ UserSchema.method = ({
         return false;
     }
 });
+
 
 const User = mongoose.model('User', UserSchema);
 
